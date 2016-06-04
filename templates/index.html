@@ -1,17 +1,23 @@
 {% extends "mylayout.html" %}
 </style>
 {% block body %}
+<br />
+<br />
 {% for entry in entries %}
+
 <div class="container">
-	<div class='col-md-4'>
-		<div> <img  src='../static/{{entry.img_path}}' /></div>
-		<div>
-				author:{{entry.author}}
-				brief:{{entry.brief}}
-				price:{{entry.price}}
-				count:{{entry.cot}}
+	<div class='col-md-10 col-md-offset-1' style=''>
+		<div class='col-md-4 col-md-offset-1' style=''>
+			<div> <img  src='../static/{{entry.img_path}}' /></div>
 		</div>
-		<a href="{{url_for('buy',book_id=entry.uid,uid=session.uid)}}"<button>点击购买</button></a>
+		<div class='col-md-4'>
+					author:{{entry.author}}<br />
+					brief:{{entry.brief}}<br />
+					price:{{entry.price}}<br />
+					count:{{entry.cot}}
+		</div>
+			<a href="{{url_for('buy',book_id=entry.uid,uid=session.uid)}}"<button>点击购买</button></a>
+		</div>
 	</div>
 </div>
 {% endfor %}

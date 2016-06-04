@@ -5,19 +5,23 @@
 <div class=page>
 	<center><h1>简易图书销售系统</h1><center>
 	<div class=metanav>
-	{% if not session.logged_in %}
-	<a href="{{url_for('login')}}">log in</a>
-	<hr style=" height:2px;border:none;border-top:2px dotted #185598;" />
-	{% else %}
-user:{{session.username}} <a href="{{url_for('logout')}}">log out</a>
-	<hr style=" height:2px;border:none;border-top:2px dotted #185598;" />
-	{% endif %}
+		{% if not session.logged_in %}
+		<a href="{{url_for('login')}}">log in</a>
+		<div class='form-group'>
+			<hr style=" width:700px;height:2px;border:3px;border-top:2px dotted #185598;" />
+		</div>
+		{% else %}
+			user:{{session.username}} <a href="{{url_for('logout')}}">log out</a>
+		<div class='form-group'>
+			<hr style=" width:700px;height:2px;border:none;border-top:2px dotted #185598;" />
+		</div>
+		{% endif %}
 	</div>
 
 {% for message in get_flashed_messages() %}
 <div class=flash><h2>{{message}}</h2></div>
 {% endfor %}
+</div>
+{% block body %}{% endblock %}
 <script src='http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js'></script>
 <script src="url_for('.static',filename='bootstrap.min.js')"></script>
-{% block body %}{% endblock %}
-</div>
