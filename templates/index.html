@@ -1,0 +1,20 @@
+{% extends "mylayout.html" %}
+{% block body %}
+
+{% for entry in entries %}
+<div class='con'>
+<div style='text-align:left;margin:10px;width:200px;float:left'> <img  src='../static/{{entry.img_path}}' /></div>
+	<div style='text-align:left;margin-top:1px;widht:200px;'>
+		<br />
+		<br />
+		<table>
+			<tr><td>author:</td><td>{{entry.author}}</td></tr>
+			<tr><td>brief:</td><td>{{entry.brief}}</td></tr>
+			<tr><td>price:</td><td>{{entry.price}}</td></tr>
+			<tr><td>count:</td><td>{{entry.cot}}</td></tr>
+		</table>
+	</div>
+<a href="{{url_for('buy',book_id=entry.uid,uid=session.uid)}}"<button>点击购买</button></a>
+</div>
+{% endfor %}<br />
+{% endblock %}

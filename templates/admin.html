@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block body %}
+<link href="{{url_for('.static',filename='bootstrap.min.css')}}" rel="stylesheet" />
+<h2 style="{align:left;color:000000}">后台管理员</h2>
+{% if error %}<p class=error><strong>Error:</strong>{{error}}{% endif %}
+<form action="{{url_for('admin_login')}}" method='post'>
+{#<dl>
+	<dt>admin:</dt>
+	<dd><input type=text name=username></dd>
+	<dt>password:</td>
+	<dd><input type=password name=password></td>
+	<dd><input type=submit value=Login></td>
+</dl>
+#}
+	<label>admin</label>
+	<div class='form-group'>
+		<input type='text' name='username' class='form-control' placeholder='account' />
+	</div>
+	<label>password</label>
+	<div class='form-group'>
+		<input type='password' name='password' class='form-control' placeholder='password' />
+	</div>
+	<input type='submit' class="btn btn-lg btn-primary btn-block" value='login' />
+</form>
+<p style='text-align:right'> <a href="{{url_for('index')}}">用户登录</a></p>
+<script src='http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js'></script>
+<script src="url_for('.static',filename='bootstrap.min.js')"></script>
+{% endblock %}

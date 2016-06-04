@@ -1,0 +1,11 @@
+{% extends "mylayout.html" %}
+{% block body %}
+{% for entry in entries %}
+<div>
+{{entry.uid}}<br />
+{{entry.ahthor}}<br />
+{{entry.breif}}<br />
+{{entry.cot}}<br />
+</div>
+{% endfor %}
+{% endblock %}

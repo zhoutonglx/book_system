@@ -1,0 +1,16 @@
+{% extends "layout.html" %} 
+{% block body %}
+
+<form action={{url_for('add')}} method=post enctype='multipart/form-data'>
+<table>
+<tr><td><center>author</center></td><td><center><input type=text name=author></center></td><tr/>
+<tr><td><center>brief</center></td><td><center><input type=text name=brief></center></td><tr />
+<tr><td><center>price</center></td><td><center><input type=text name=price></center></td></tr>
+<tr><td><center>count</center></td><td><center><input type=text name=count></center></td></tr>
+<tr><td><center>cover</center></td><td><center><input type=file name=file></center></td></tr>
+</table>
+<br />
+<input type=submit value='submit'>
+</form>
+
+{% endblock %}

@@ -1,0 +1,8 @@
+body { font-family:sans-serif; background:#eee;}
+
+*.con { 
+	width:700px;
+	background-color:green;
+	margin:10px;
+	height:190px;
+}

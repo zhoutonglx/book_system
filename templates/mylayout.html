@@ -1,0 +1,20 @@
+
+<!doctype html>
+<title>简易图书管理系统</title>
+<meta http-equiv='Content-Type' content='text/html' charset=utf-8>
+<link rel=stylesheet type=text/css href="{{url_for('static',filename='mystyle.css')}}">
+<div class=page>
+	<center><h1>简易图书销售系统</h1><center>
+	<div class=metanav>
+	{% if not session.logged_in %}
+	<a href="{{url_for('login')}}">log in</a>
+	{% else %}
+user:{{session.username}} <a href="{{url_for('logout')}}">log out</a>
+	{% endif %}
+	</div>
+
+{% for message in get_flashed_messages() %}
+<div class=flash><h2>{{message}}</h2></div>
+{% endfor %}
+{% block body %}{% endblock %}
+</div>

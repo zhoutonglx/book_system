@@ -1,0 +1,48 @@
+{% extends "layout.html" %} 
+{% block body %}
+{#{% if session.logged_in %}
+<form action="{{url_for('add_entry')}}" method=post class=add-entry>
+<dl>
+	<dt>title:
+	<dd><input type=text size=30 name=title>
+	<dt>text:
+	<dd><textarea name=text rows=5 cols=40></textarea>
+	<dd><input type=submit value=Share>
+</dl>
+</form>
+{% endif %}
+<ul class=entries></ul>
+	{% for entry in entries %}
+		<li><h2>{{entry.brief}}</h2></li>
+		<li><h2>{{entry.img_path}}</h2></li>
+		<li><h2>{{entry.price}}</h2></li>
+	{% else %}
+		<li><em>Unbelievable. No entries here so far</em>
+	{% endfor %}
+</ul> #}
+
+<table border='1'>
+<tr>
+	<th>no.</th>
+	<th>author</th>
+	<th>brief</th>
+	<th>price</th>
+	<th>count</th>
+	<th>action</th>
+</tr>
+		{% for entry in entries %}
+			<tr>
+			<td>{{entry.uid}}</td>
+			<td>{{entry.author}}</td>
+			<td>{{entry.brief}}</td>
+			<td>{{entry.price}}</td>
+			<td>{{entry.cot}}</td>
+<td><a href="{{url_for('modify',uid=entry.uid)}}">修改</a>|<a href="{{url_for('delete',uid=entry.uid)}}">删除</a></td>
+		</tr>
+		{% endfor %}
+</table>
+<a href={{url_for('add_entry')}}>添加</a>
+<br />
+<a href={{url_for('statics')}}>统计</a>
+
+{% endblock %}
