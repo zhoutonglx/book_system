@@ -1,14 +1,13 @@
 {% extends "mylayout.html" %}
 <link rel="stylesheet" href="{{url_for('.static',filename='spinner/jquery.spinner.css')}}" />
 {% block body %}
-
 <br />
 <br />
-
-<div class="contailer" style="background:green">
+<br />
+<div class="contailer" style="background:#99699">
 	<div class='col-md-2' style="border-style:solid;margin-left:54px,hight:1700px;">
 		<br />
-		new book!! hot
+		新书上架:
 		<br />
 		<br />
 		{% for new in news %}
@@ -20,7 +19,7 @@
 			<br />
 		{% endfor %}
 	</div>
-	<div class='col-md-8' style="float:left">
+	<div class='col-md-8' style="float:left;background:#99699">
 		<div class='clear'></div>
 		{% for entry in entries %}
 			<div class='col-md-3' style="margin-left:55px" >
@@ -28,7 +27,7 @@
 			</div>
 			<div class='col-md-3' style="margin-left:50px;margin-top:10px">
 				作者:{{entry.author}}<br />
-				name:{{entry.name}}<br />
+				书名:{{entry.name}}<br />
 				简介:{{entry.brief}}<br />
 				价格:{{entry.price}}<br />
 				余量:{{entry.cot}}<br />
@@ -45,7 +44,7 @@
 					<br />
 				</form>
 			</div>
-			<div class='form-group'>
+			<div class='form-group' >
 			</div>
 		{% endfor %}
 	</div>
@@ -53,18 +52,20 @@
 		<label>
 		search:
 		</label>
-		<div class='form-group'>
-			<input type='text' name='serach' />
-		</div>
-		<div class='form-group'>
-		<input type='submit' class='btn btn-success' value='submit'/>
-		</div>
+		<form  action="{{url_for('search')}}" method='get'>
+			<div class='form-group'>
+				<input type='text' name='search' class='form-control' placeholder='输入作者或书名'/>
+			</div>
+			<div class='form-group'>
+				<input type='submit' class='btn btn-success' value='submit'/>
+			</div>
+		</form>
 		<br />
 		<h2>user info:</h2>
 		<h3><font color='grey'>{{session.username}}</font></h3><a href={{url_for('logout')}}>logout</a>
 		<br />
 		<br />
-		<p><font color='blue'>待评价:<font> <a href="{{url_for('comment',uid=session.uid)}}">{{other}}</p>
+		<p><font color='blue'>待评价:<font> <a href="{{url_for('comment',uid=session.uid)}}">{{comment}}</p>
 	</div>
 </div>
 <script type='text/javascript'>

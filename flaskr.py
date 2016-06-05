@@ -73,8 +73,11 @@ def index():
     cur.execute(sql)
     res = cur.fetchall()
     news = [dict(img_path=row[0],author=row[1],price=row[2]) for row in res]
-    other = 6
-    return render_template('index.html',entries=entries,news=news,other=other)
+    uid = session['uid']
+    cur.execute("select count(*) from book_order where uid='%s' and is_comment=0" % uid)
+    res = cur.fetchall()
+    comment = res[0][0] 
+    return render_template('index.html',entries=entries,news=news,comment=comment)
      
 
 @app.route('/login',methods=['POST'])
@@ -273,6 +276,26 @@ def statics():
 @app.route('/comment')
 def comment():
 	return 'hello world'
+
+@app.route('/search',methods=['get'])
+def search():
+    cur = g.db.cursor()
+    content = request.args.get('search','')
+    sql = "select id,author,name,brief,img_path,price,cot from book where name like '%"+content+"%' or author like '%"+content+"%'" 
+    cur.execute(sql)
+    res = cur.fetchall()
+    entries = [dict(uid=row[0],author=row[1],name=row[2],brief=row[3],img_path=row[4],price=row[5],cot=row[6]) for row in res]
+    cur.close()
+    cur = g.db.cursor()
+    sql = "select img_path,author,price from book order by create_time desc"
+    cur.execute(sql)
+    res = cur.fetchall()
+    news = [dict(img_path=row[0],author=row[1],price=row[2]) for row in res]
+    uid = session['uid']
+    cur.execute("select count(*) from book_order where uid='%s' and is_comment=0" % uid)
+    res = cur.fetchall()
+    comment = res[0][0] 
+    return render_template('index.html',entries=entries,news=news,comment=comment)
 
 if __name__ == '__main__':
     app.secret_key = 'super secret key'
