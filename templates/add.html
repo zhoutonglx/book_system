@@ -2,8 +2,10 @@
 {% block body %}
 
 <form action={{url_for('add')}} method=post enctype='multipart/form-data'>
+<h1 style='float:left'>add:</h1>
 <table>
 <tr><td><center>author</center></td><td><center><input type=text name=author></center></td><tr/>
+<tr><td><center>name</center></td><td><center><input type=text name=name></center></td><tr/>
 <tr><td><center>brief</center></td><td><center><input type=text name=brief></center></td><tr />
 <tr><td><center>price</center></td><td><center><input type=text name=price></center></td></tr>
 <tr><td><center>count</center></td><td><center><input type=text name=count></center></td></tr>

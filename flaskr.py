@@ -62,13 +62,18 @@ def test():
 def index():
     if session.get('logged_in') is None:
         return render_template('login.html');
-    g.db = g.db.cursor()
-    g.db.execute('select id,author,brief,img_path,price,cot from book')
+    cur = g.db.cursor()
+    cur.execute('select id,author,name,brief,img_path,price,cot from book')
     L = []
-    res = g.db.fetchall()
-    entries = [dict(uid=row[0],author=row[1],brief=row[2],img_path=row[3],price=row[4],cot=row[5]) for row in res]
-    g.db.close()
-    return render_template('index.html',entries=entries)
+    res = cur.fetchall()
+    entries = [dict(uid=row[0],author=row[1],name=row[2],brief=row[3],img_path=row[4],price=row[5],cot=row[6]) for row in res]
+    cur.close()
+    cur = g.db.cursor()
+    sql = "select img_path,author,price from book order by create_time desc"
+    cur.execute(sql)
+    res = cur.fetchall()
+    news = [dict(img_path=row[0],author=row[1],price=row[2]) for row in res]
+    return render_template('index.html',entries=entries,news=news)
      
 
 @app.route('/login',methods=['POST'])
@@ -98,7 +103,7 @@ def admin():
 @app.route('/admin/login',methods=['POST'])
 def admin_login():
     error = None
-    admin = request.form['admin']
+    admin = request.form['username']
     password = request.form['password']
     sql = "select * from administrator where username= '%s' and password = '%s'" % (admin,password)
     g.db = g.db.cursor()
@@ -119,10 +124,10 @@ def show():
     if session.get('logged_in') is None:
         return render_template('login.html');
     g.db = g.db.cursor()
-    g.db.execute('select id,author,brief,price,cot from book')
+    g.db.execute('select id,author,name,brief,price,cot from book')
     L = []
     res = g.db.fetchall()
-    entries = [dict(uid=row[0],author=row[1],brief=row[2],price=row[3],cot=row[4]) for row in res]
+    entries = [dict(uid=row[0],author=row[1],name=row[2],brief=row[3],price=row[4],cot=row[5]) for row in res]
     g.db.close()
     return render_template('show.html',entries=entries)
 
@@ -159,7 +164,7 @@ def modify(uid):
         res = g.db.fetchone()
         #entry = [dict(uid=res[0],author=res[1],brief=res[2],price=res[3],cot=res[5])]
         g.db.close()
-        return render_template('modify.html',uid=res[0],author=res[1],brief=res[2],price=res[3],cot=res[5])
+        return render_template('modify.html',uid=res[0],author=res[1],name=res[2],brief=res[3],price=res[4],cot=res[5])
     except Exception as e:
         return e
 
@@ -170,6 +175,7 @@ def upload_file(filename):
 def modify_entry():
     file = request.files.get('file')
     uid = request.form.get('uid')
+    name = request.form.get('name')
     cot = request.form.get('cot')
     author = request.form.get('author')
     price = request.form.get('price')
@@ -181,11 +187,11 @@ def modify_entry():
             filename = secure_filename(file.filename)
             send_from_directory(app.config['UPLOAD_FOLDER'],filename)
             img_path = filename
-            sql = "update book set author='%s',brief='%s',price='%s',img_path='%s',cot='%s' where id='%s'" % (author,brief,price,img_path,cot,uid)
+            sql = "update book set author='%s',name='%s' brief='%s',price='%s',img_path='%s',cot='%s' where id='%s'" % (author,name,brief,price,img_path,cot,uid)
         except Exception as e:
             return e
     else:
-        sql = "update book set author='%s',brief='%s',price='%s',cot='%s' where id='%s'" % (author,brief,price,cot,uid)
+        sql = "update book set author='%s',name='%s',brief='%s',price='%s',cot='%s' where id='%s'" % (author,name,brief,price,cot,uid)
     try:
         g.db.cursor().execute(sql)
         g.db.commit()
@@ -201,30 +207,31 @@ def add_entry():
 
 @app.route('/add',methods=['post'])
 def add():
-	author = request.form.get('author')
-	brief = request.form.get('brief')
-	price = request.form.get('price')
-	cot = request.form.get('count')
-	file = request.files.get('file')
-	if file and allowed_file(file.filename):
-		try:
-			filename = secure_filename(file.filename)
-			send_from_directory(app.config['UPLOAD_FOLDER'],filename)
-			img_path = filename
-			sql = "insert into book(author,brief,price,img_path,cot) values('%s','%s','%s','%s','%s')" % (author,brief,price,img_path,cot)
-		except Exception as e:
-			return e
-	else:
-		sql = "insert into book(author,brief,price,cot) values('%s','%s','%s','%s');" % (author,brief,price,cot)
-	try:
-		g.db.cursor().execute(sql) 
-		g.db.commit()
-		g.db.close()
-	except Exception as e:
-		return e
+    author = request.form.get('author')
+    brief = request.form.get('brief')
+    price = request.form.get('price')
+    cot = request.form.get('count')
+    name = request.form.get('name')
+    file = request.files.get('file')
+    if file and allowed_file(file.filename):
+        try:
+            filename = secure_filename(file.filename)
+            send_from_directory(app.config['UPLOAD_FOLDER'],filename)
+            img_path = filename
+            sql = "insert into book(author,name,brief,price,img_path,cot) values('%s','%s','%s','%s','%s')" % (author,name,brief,price,img_path,cot)
+        except Exception as e:
+            return e
+    else:
+        sql = "insert into book(author,brief,price,cot) values('%s','%s','%s','%s');" % (author,brief,price,cot)
+        try:
+            g.db.cursor().execute(sql) 
+            g.db.commit()
+            g.db.close()
+        except Exception as e:
+            return e
 	
-	flash('add succeed')
-	return redirect(url_for('show'))
+    flash('add succeed')
+    return redirect(url_for('show'))
 
 
 @app.route('/buy',methods=['POST','GET'])

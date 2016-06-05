@@ -20,11 +20,12 @@
 		<li><em>Unbelievable. No entries here so far</em>
 	{% endfor %}
 </ul> #}
-
-<table border='1'>
+<br /><br />
+<table class='table table-bordered table-hover'>
 <tr>
 	<th>no.</th>
 	<th>author</th>
+	<center><th>name</th><center>
 	<th>brief</th>
 	<th>price</th>
 	<th>count</th>
@@ -34,6 +35,7 @@
 			<tr>
 			<td>{{entry.uid}}</td>
 			<td>{{entry.author}}</td>
+			<td>{{entry.name}}</td>
 			<td>{{entry.brief}}</td>
 			<td>{{entry.price}}</td>
 			<td>{{entry.cot}}</td>

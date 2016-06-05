@@ -4,36 +4,63 @@
 
 <br />
 <br />
-{% for entry in entries %}
 
-<div class="container" >
-	<div class='col-md-10 col-md-offset-1' style=''>
-		<div class='col-md-3 col-md-offset-1' style=''>
-			<div> <img  src='../static/{{entry.img_path}}' /></div>
+<div class="contailer" style="background:green">
+	<div class='col-md-2' style="border-style:solid;margin-left:54px,hight:1700px;">
+		<br />
+		new book!! hot
+		<br />
+		<br />
+		{% for new in news %}
+			<div>
+				<img src='../static/{{new.img_path}}' />
+			</div>
+			<center>author:{{new.author}}</center>
+			<center>price:<font color='red'>{{new.price}}</font>$</center>
+			<br />
+		{% endfor %}
+	</div>
+	<div class='col-md-8' style="float:left">
+		<div class='clear'></div>
+		{% for entry in entries %}
+			<div class='col-md-3' style="margin-left:55px" >
+				<img src='../static/{{entry.img_path}}' />
+			</div>
+			<div class='col-md-3' style="margin-left:50px;margin-top:10px">
+				作者:{{entry.author}}<br />
+				name:{{entry.name}}<br />
+				简介:{{entry.brief}}<br />
+				价格:{{entry.price}}<br />
+				余量:{{entry.cot}}<br />
+			</div>
+			<div class='col-md-2'>
+				<form action="{{url_for('buy')}}" method='get'>
+					<input type='hidden' name='book_id' value='{{entry.uid}}' /><br />
+					<input type='hidden' name='uid' value='{{session.uid}}' /><br />
+					count:<input type='text' class="spanner" name='cot'/><br />
+					{#<a href="{{url_for('buy',book_id=entry.uid,uid=session.uid)}}"<button>点击购买</button></a>#}
+					<input type='submit' class='default' value='点击购买' />				
+					<br />
+					<br /><br /><br /><br /><br /><br />
+					<br />
+				</form>
+			</div>
+			<div class='form-group'>
+			</div>
+		{% endfor %}
+	</div>
+	<div class='col-md-2' style="float:left">
+		<label>
+		search:
+		</label>
+		<div class='form-group'>
+			<input type='text' name='serach' />
 		</div>
-		<div class='col-md-3'>
-					作者:{{entry.author}}<br />
-					简介:{{entry.brief}}<br />
-					价格:{{entry.price}}<br />
-					余量:{{entry.cot}}
-		</div>
-		<div  style='margin:10px'>
-			<form action="{{url_for('buy')}}" method='get'>
-				<input type='hidden' name='book_id' value='{{entry.uid}}' /><br />
-				<input type='hidden' name='uid' value='{{session.uid}}' /><br />
-				count:<input type='text' class="spanner" name='cot'/><br />
-				{#<a href="{{url_for('buy',book_id=entry.uid,uid=session.uid)}}"<button>点击购买</button></a>#}
-				<input type='submit' class='default' value='点击购买' />				
-			</form>
+		<div class='form-group'>
+		<input type='submit' class='btn btn-success' value='submit'/>
 		</div>
 	</div>
-	<br /><br /><br /><br /><br /><br /><br />
-	<div class='group-form'>
-		<hr style="width:700px;height:10px"/>
-	</div>
-
 </div>
-{% endfor %}
 <script type='text/javascript'>
 $('.spinner').spinner();
 </script>

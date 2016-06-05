@@ -1,12 +1,14 @@
 {% extends "layout.html" %}
 {% block body %}
 <h2>订单详情</h2>
-<table class='my'>
+<table class='table table-bordered table-hover'>
 <tr>
 	<th>用户id</th>
 	<th>username</th>
 	<th>book_id</th>
 	<th>book_name</th>
+	<th>count</ht>
+	<th>create_time</th>
 </tr>
 {% for entry in entries %}
 	<tr>
@@ -14,6 +16,8 @@
 	<td>{{entry.username}}</td>
 	<td>{{entry.book_id}}</th>
 	<td>{{entry.book_name}}</th>
+	<td>{{entry.cot}}</th>
+	<td>{{entry.create_time}}</th>
 {% endfor %}
 </table>
 <a href="{{url_for('show')}}">书籍管理</a>
