@@ -73,7 +73,8 @@ def index():
     cur.execute(sql)
     res = cur.fetchall()
     news = [dict(img_path=row[0],author=row[1],price=row[2]) for row in res]
-    return render_template('index.html',entries=entries,news=news)
+    other = 6
+    return render_template('index.html',entries=entries,news=news,other=other)
      
 
 @app.route('/login',methods=['POST'])
@@ -164,7 +165,7 @@ def modify(uid):
         res = g.db.fetchone()
         #entry = [dict(uid=res[0],author=res[1],brief=res[2],price=res[3],cot=res[5])]
         g.db.close()
-        return render_template('modify.html',uid=res[0],author=res[1],name=res[2],brief=res[3],price=res[4],cot=res[5])
+        return render_template('modify.html',uid=res[0],author=res[1],name=res[2],brief=res[3],price=res[4],img_path=res[5],cot=res[6])
     except Exception as e:
         return e
 
@@ -268,6 +269,10 @@ def statics():
 	res = cur.fetchall()
 	entries = [dict(uid=row[0],username=row[1],book_id=row[2],book_name=row[3]) for row in res]
 	return render_template('statics.html',entries=entries)
+
+@app.route('/comment')
+def comment():
+	return 'hello world'
 
 if __name__ == '__main__':
     app.secret_key = 'super secret key'

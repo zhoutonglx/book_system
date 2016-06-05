@@ -59,6 +59,12 @@
 		<div class='form-group'>
 		<input type='submit' class='btn btn-success' value='submit'/>
 		</div>
+		<br />
+		<h2>user info:</h2>
+		<h3><font color='grey'>{{session.username}}</font></h3><a href={{url_for('logout')}}>logout</a>
+		<br />
+		<br />
+		<p><font color='blue'>待评价:<font> <a href="{{url_for('comment',uid=session.uid)}}">{{other}}</p>
 	</div>
 </div>
 <script type='text/javascript'>
