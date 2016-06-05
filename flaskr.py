@@ -50,7 +50,7 @@ def teardown_request(exception):
     if db is not None:
         db.close()
 
-@app.route('/test')
+@app.route('/test',methods=['GET'])
 def test():
     sql = "select * from book where id=20"
     g.db = g.db.cursor()
@@ -85,6 +85,7 @@ def login():
     else:
         session['logged_in'] = True
         session['username'] = res[0][1]
+        session['uid'] = res[0][0]
         flash('you were logged in')
         return redirect(url_for('index'))
 
@@ -226,8 +227,11 @@ def add():
 	return redirect(url_for('show'))
 
 
-@app.route('/buy/<book_id>/<uid>')
-def buy(book_id,uid):
+@app.route('/buy',methods=['POST','GET'])
+def buy():
+    book_id = request.args.get('book_id')
+    uid = request.args.get('uid')
+    cot = request.args.get('cot')
     sql = "select cot from book where id='%s'" % book_id
     g.db = g.db.cursor()
     g.db.execute(sql)
