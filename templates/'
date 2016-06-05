@@ -16,14 +16,11 @@
 					价格:{{entry.price}}<br />
 					余量:{{entry.cot}}
 		</div>
-		<div  style='margin:10px'>
-			count:
 			<a href="{{url_for('buy',book_id=entry.uid,uid=session.uid)}}"<button>点击购买</button></a>
 		</div>
 	</div>
-	<br /><br /><br /><br /><br /><br /><br />
 	<div class='group-form'>
-		<hr style="width:700px;height:10px"/>
+		<hr style="width:700px"/>
 	</div>
 
 </div>
