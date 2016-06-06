@@ -52,11 +52,16 @@ def teardown_request(exception):
 
 @app.route('/test',methods=['GET'])
 def test():
-    sql = "select * from book where id=20"
+    sql = "select * from v_statics"
     g.db = g.db.cursor()
     g.db.execute(sql)
     res = g.db.fetchall()
-    return 'helloworld' 
+	cot = len(res)
+	for x in range(cot):
+		name = res[x][0]
+		cot = res[x][1]
+
+    return render_template('test.html',entries=entries)
 
 @app.route('/')
 def index():
