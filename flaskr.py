@@ -265,13 +265,12 @@ def buy():
 
 @app.route('/statics')
 def statics():
-	sql = "select user.id as uid,user.username,book.id as book_id,book.brief from book_order left join user on"\
-		   " book_order.uid=user.id left join book on book_order.book_id=book.id"
-	cur = g.db.cursor()
-	cur.execute(sql)
-	res = cur.fetchall()
-	entries = [dict(uid=row[0],username=row[1],book_id=row[2],book_name=row[3]) for row in res]
-	return render_template('statics.html',entries=entries)
+    sql = "select * from v_order"
+    cur = g.db.cursor()
+    cur.execute(sql)
+    res = cur.fetchall()
+    entries = [dict(uid=row[0],username=row[1],book_id=row[2],book_name=row[3],cot=row[4],price=row[5],total=row[6],create_time=row[7]) for row in res]
+    return render_template('statics.html',entries=entries)
 
 @app.route('/comment')
 def comment():

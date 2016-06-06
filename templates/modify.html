@@ -4,7 +4,7 @@
 <br />
 <br />
 <br />
-<div style='float:left'>
+<div >
 	<br />
 	<img src="../static/{{img_path}}" />
 	<br />
@@ -12,12 +12,24 @@
 </div>
 <form action={{url_for('modify_entry')}} enctype='multipart/form-data' method=post>
 	<input type='hidden' name='uid' value={{uid}} /><br />
-	author:<input type='text' name='author' value={{author}} /><br />
-	name:<input type='text' name='name' value={{name}} /><br />
-	brief:<input type='textarea' name='brief' value={{brief}} /><br />
-	price:<input type='text' name='price' value={{price}} /><br />
-	count:<input type='text' name='cot' value={{cot}} /><br />
-	<input type='file' name='file' /><br />
+	<table class='table-condensed'>
+	<tr>
+		<td>author:</td><td><input type='text' name='author' value={{author}} /></td>
+	</tr>
+	<tr>
+	<td>name:</td><td><input type='text' name='name' value={{name}} /></td>
+	</tr>
+	<tr>
+	<td>brief:</td><td><input type='textarea' name='brief' value={{brief}} /></td>
+	</tr>
+	<tr>
+	<td>price:</td><td><input type='text' name='price' value={{price}} /></td>
+	</tr>
+	<tr>
+	<td>count:</td><td><input type='text' name='cot' value={{cot}} /></td>
+	</tr>
+	<tr><td>conver</td><td><input type='file' name='file' /></td>
+	</table>
 	<input type='submit' class='btn btn-info' value='submit' />
 </form>
 {% endblock %}

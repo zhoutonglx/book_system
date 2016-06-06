@@ -7,7 +7,9 @@
 	<th>username</th>
 	<th>book_id</th>
 	<th>book_name</th>
-	<th>count</ht>
+	<th>count</th>
+	<th>price</th>
+	<th>total</th>
 	<th>create_time</th>
 </tr>
 {% for entry in entries %}
@@ -17,6 +19,8 @@
 	<td>{{entry.book_id}}</th>
 	<td>{{entry.book_name}}</th>
 	<td>{{entry.cot}}</th>
+	<td>{{entry.price}}</th>
+	<td>{{entry.total}}</th>
 	<td>{{entry.create_time}}</th>
 {% endfor %}
 </table>
