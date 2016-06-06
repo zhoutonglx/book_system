@@ -274,7 +274,16 @@ def statics():
 
 @app.route('/comment')
 def comment():
-	return 'hello world'
+	uid = session['uid']
+	sql = "select * from v_comment where uid='%d'" % uid
+	cur = g.db.cursor()
+	cur.execute(sql)
+	res = cur.fetchall()
+	entries = [dict(order_id=row[0],img_path=row[2],book_author=row[3],book_name=row[4],cot=row[5],create_time=row[6],total=row[7]) for row in res]
+	if len(entries) is 0:
+		flash('all is commented')
+		return redirect(url_for('index'))
+	return render_template('comment.html',entries=entries)
 
 @app.route('/search',methods=['get'])
 def search():
@@ -295,6 +304,19 @@ def search():
     res = cur.fetchall()
     comment = res[0][0] 
     return render_template('index.html',entries=entries,news=news,comment=comment)
+
+@app.route('/submit_comment',methods=['POST'])
+def submit_comment():
+	cur = g.db.cursor()
+	order_id = request.form.get('order_id',0)
+	if order_id is 0:
+		return  redirect(url_for('index',error='fatal error'))
+	content = request.form.get('content','')
+	sql = "insert into comment(order_id,content) values('%s','%s');" % (order_id,content)
+	cur.execute(sql)
+	g.db.commit()
+	flash('comment succeed!')
+	return redirect(url_for('index'))
 
 if __name__ == '__main__':
     app.secret_key = 'super secret key'
